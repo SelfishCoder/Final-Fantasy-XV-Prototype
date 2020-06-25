@@ -14,7 +14,7 @@ public class TurretButton : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     private void Awake()
     {
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        goldText.text = TurretManager.Instance.towers[turretIndex].GetComponent<Turret>().gold.ToString();
+        goldText.text = TurretManager.Instance.turrets[turretIndex].GetComponent<Turret>().gold.ToString();
     }
 
     public void OnPointerDown(PointerEventData eventData)

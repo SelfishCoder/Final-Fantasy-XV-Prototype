@@ -5,7 +5,7 @@ using SelfishCoder.Core;
 [DisallowMultipleComponent]
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private float gameTime = 0;
+    [SerializeField] private int maxGamePlayTime = 45; 
     public event Action OnGameStart;
     public event Action OnGameEnd;
     public GameState gameState;
@@ -14,23 +14,21 @@ public class GameManager : Singleton<GameManager>
     {
         OnGameStart?.Invoke();
         Instance.OnGameEnd += OnGameEnded;
-        gameState = GameState.Gameplay;
+        gameState = GameState.GamePlay;
     }
 
     private void Update()
     {
         if (gameState == GameState.Ended) return;
+        
         if (EnemyManager.Instance.aliveEnemyCount <= 0 && EnemyManager.Instance.waveIndex >= 1)
         {
             EnemyManager.Instance.StartEnemyWave();
         }
-        gameTime = Time.time;
-        
-        if (gameTime>=45)
-        {
-            gameState = GameState.Ended;
-            Instance.OnGameEnd?.Invoke();
-        }
+
+        if (!(Time.time >= maxGamePlayTime)) return;
+        gameState = GameState.Ended;
+        Instance.OnGameEnd?.Invoke();
     }
     
     private void OnDestroy()
@@ -43,11 +41,4 @@ public class GameManager : Singleton<GameManager>
         StopAllCoroutines();
         gameState = GameState.Ended;
     }
-}
-
-public enum GameState
-{
-    Gameplay, 
-    
-    Ended
 }

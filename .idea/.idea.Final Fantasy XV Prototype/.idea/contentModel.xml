@@ -17,7 +17,9 @@
           <e p="BuildArea.cs" t="Include" />
           <e p="Enemy.cs" t="Include" />
           <e p="EnemyManager.cs" t="Include" />
+          <e p="EnemyUi.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="GameState.cs" t="Include" />
           <e p="GoldManager.cs" t="Include" />
           <e p="IDamageable.cs" t="Include" />
           <e p="OpenStoreButton.cs" t="Include" />

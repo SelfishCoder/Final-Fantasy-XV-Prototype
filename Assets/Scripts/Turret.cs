@@ -3,9 +3,9 @@
 [DisallowMultipleComponent]
 public class Turret : MonoBehaviour
 {
+    [SerializeField] private Enemy enemy = null;
     [SerializeField] private float range = 5f;
     [SerializeField] private float fireRate = .5f;
-    [SerializeField] private Enemy enemy = null;
     public int gold = 20;
     public int power = 25;
     public int level = 1;
@@ -35,7 +35,7 @@ public class Turret : MonoBehaviour
         enemy.TakeDamage(this.power);
     }
 
-    private bool TargetInRange(Vector3 targetposition)
+    private bool IsTargetInRange(Vector3 targetPosition)
     {
         return range >= Vector3.Distance(this.transform.position, enemy.transform.position);
     }
@@ -46,17 +46,16 @@ public class Turret : MonoBehaviour
         if (!enemy)
         {
             fireTimer = fireRate;
-            GameObject enemy = FindTarget();
-            if (!enemy)
+            GameObject enemyGameObject = FindTarget();
+            if (!enemyGameObject)
             {
                 return;
             } 
-            Debug.Log("enemy");
-            this.enemy = enemy.GetComponent<Enemy>();
+            this.enemy = enemyGameObject.GetComponent<Enemy>();
         }
 
         fireTimer -= Time.deltaTime;
-        if (TargetInRange(enemy.transform.position) && enemy.Health>0)
+        if (IsTargetInRange(enemy.transform.position) && enemy.Health>0)
         {
             if (fireTimer<=0)
             {

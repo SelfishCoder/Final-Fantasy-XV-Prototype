@@ -20,8 +20,8 @@ public class GoldManager : Singleton<GoldManager>
 
     private void Start()
     {
-        EnemyManager.Instance.OnEnemyDestroyed += OnEnemyDestroyed;
         Gold = 25;
+        EnemyManager.Instance.OnEnemyDestroyed += OnEnemyDestroyed;
     }
 
     private void OnDestroy()
@@ -39,7 +39,7 @@ public class GoldManager : Singleton<GoldManager>
         Instance.Gold += amount;
     }
 
-    public bool HasEnoughMoney(int amount)
+    public bool HasEnoughGold(int amount)
     {
         return Instance.Gold >= amount;
     }

@@ -61,7 +61,9 @@
      <Compile Include="Assets\Scripts\BuildArea.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\EnemyUi.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GameState.cs" />
      <Compile Include="Assets\Scripts\GoldManager.cs" />
      <Compile Include="Assets\Scripts\IDamageable.cs" />
      <Compile Include="Assets\Scripts\OpenStoreButton.cs" />
@@ -72,8 +74,20 @@
      <Compile Include="Assets\Scripts\UI_Manager.cs" />
      <Compile Include="Assets\Scripts\Wave.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
+ <Reference Include="Unity.Timeline.Editor">
+ <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder.Editor">
+ <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder">
+ <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline">
+ <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Projects/Unity/Final Fantasy XV Prototype/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>

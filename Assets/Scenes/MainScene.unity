@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1d96b98b874c4b9a6b542eb84a9250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towers:
+  turrets:
   - {fileID: 3068392281271361012, guid: e7f6d7dcb972f9f4e8a2687dd0e900e1, type: 3}
   - {fileID: 6643675754344701754, guid: 499ac10895448514e97d3cc6dadc3061, type: 3}
   - {fileID: 354853258695711465, guid: 4bc2ed7ac3d0f1048bf448bb5f767b10, type: 3}
@@ -3518,7 +3518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697f65131d5fbff44ab25690f4023d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 0
+  maxGamePlayTime: 45
   gameState: 0
 --- !u!4 &1676353555
 Transform:
@@ -3962,13 +3962,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 5220410761480445622, guid: 736f2cfd1d16f554ca043ba59629bf3f,
     type: 3}
+  enemyPoolSize: 50
   enemyPool: []
   enemySpawnPoints:
   - {fileID: 1177232288}
   - {fileID: 1553286087}
   - {fileID: 535800494}
   - {fileID: 1357113412}
-  enemyWaypoints:
+  enemyWayPoints:
   - {fileID: 804118477}
   - {fileID: 1540886343}
   - {fileID: 962714440}
@@ -3989,8 +3990,8 @@ MonoBehaviour:
   - EnemyCount: 50
     enemySpeed: 7.5
     enemyHealth: 100
-  aliveEnemyCount: 0
   spawnedEnemyCount: 0
+  aliveEnemyCount: 0
   waveIndex: 0
 --- !u!1001 &3371064506109410430
 PrefabInstance:

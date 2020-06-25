@@ -1,15 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
 
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private Transform targetLocation;
-    [SerializeField] private Image healthBar;
     [SerializeField] private int health;
-    [SerializeField] public int gold;
     [SerializeField] private float speed;
-
+    [SerializeField] public int gold;
+    public event Action<int> HealthChanged;
+    
     public float Speed
     {
         get => speed;
@@ -22,15 +22,15 @@ public class Enemy : MonoBehaviour, IDamageable
         set
         {
             health = value;
-            healthBar.fillAmount = health / 100f;
+            HealthChanged?.Invoke(health);
             if (health<=0)
             {
-                OnDie();   
+                Die();   
             }
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
         this.Health = 100;
     }
@@ -39,9 +39,9 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (GameManager.Instance.gameState == GameState.Ended) return;
         if (!targetLocation) return;
-        Vector3 dir = targetLocation.position - transform.position;
-        if (dir.magnitude<=1f) return;
-        transform.Translate(dir.normalized * (this.speed * Time.deltaTime), Space.World);
+        Vector3 direction = targetLocation.position - transform.position;
+        if (direction.magnitude<=1f) return;
+        transform.Translate(direction.normalized * (this.speed * Time.deltaTime), Space.World);
     }
 
     public void TakeDamage(int amount)
@@ -54,9 +54,9 @@ public class Enemy : MonoBehaviour, IDamageable
         this.targetLocation = target;
     }
 
-    public void OnDie()
+    private void Die()
     {
-        EnemyManager.Instance.DestroyEnemy(this.gameObject);
+        EnemyManager.Instance.DestroyEnemy(this);
     }
 }
 

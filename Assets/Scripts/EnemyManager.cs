@@ -9,64 +9,67 @@ using Random = UnityEngine.Random;
 public class EnemyManager : Singleton<EnemyManager>
 {
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private int enemyPoolSize = 50;
     [SerializeField] private List<GameObject> enemyPool = new List<GameObject>();
     [SerializeField] private List<Transform> enemySpawnPoints = new List<Transform>();
-    [SerializeField] private List<Transform> enemyWaypoints = new List<Transform>();
+    [SerializeField] private List<Transform> enemyWayPoints = new List<Transform>();
     [SerializeField] private List<Wave> waves = new List<Wave>();
-    private Dictionary<Transform,Transform> waypoints = new Dictionary<Transform, Transform>();
+    private readonly Dictionary<Transform,Transform> wayPoints = new Dictionary<Transform, Transform>();
     
+    public int spawnedEnemyCount = 0;
     public int aliveEnemyCount = 0;
-    public int spawnedEnemyCount;
-    public int waveIndex;
+    public int waveIndex = 0;
     
     public event Action<Enemy> OnEnemyDestroyed;
 
-    private void InitWaypoints()
+    private void InitWayPoints()
     {
         for (int i = 0; i < 4; i++)
         {
-            waypoints.Add(enemySpawnPoints[i],enemyWaypoints[i]);
+            wayPoints.Add(enemySpawnPoints[i],enemyWayPoints[i]);
         }    
     }
-    
-    private void Start()
+
+    private void InitEnemyPool(int poolSize)
     {
-        InitWaypoints();
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < poolSize; i++)
         {
-            GameObject enemy = Instantiate(enemyPrefab);
-            enemy.transform.SetParent(EnemyManager.Instance.gameObject.transform);
+            GameObject enemy = Instantiate(enemyPrefab, EnemyManager.Instance.gameObject.transform, true);
             enemy.SetActive(false);
             enemyPool.Add(enemy);
         }
     }
-
-    public void SpawnEnemyAt(Transform location)
+    
+    private void Start()
     {
-        for (int i = 0; i < Instance.enemyPool.Count; i++)
+        InitWayPoints();
+        InitEnemyPool(enemyPoolSize);
+    }
+
+    private void SpawnEnemyAt(Transform location)
+    {
+        foreach (GameObject enemyInstance in Instance.enemyPool)
         {
-            if (!Instance.enemyPool[i].activeInHierarchy)
-            {
-                GameObject enemyGameObject = Instance.enemyPool[i];
-                enemyGameObject.transform.SetPositionAndRotation(location.position, Quaternion.Euler(0,-30,0));
-                enemyGameObject.SetActive(true);
+            if (enemyInstance.activeInHierarchy) continue;
+            GameObject enemyGameObject = enemyInstance;
+            enemyGameObject.transform.SetPositionAndRotation(location.position, Quaternion.Euler(0,-30,0));
+            enemyGameObject.SetActive(true);
                 
-                Enemy enemy = enemyGameObject.GetComponent<Enemy>(); 
-                enemy.SetTarget(waypoints[location]);
-                enemy.Health = waves[waveIndex].enemyHealth;
-                enemy.Speed = waves[waveIndex].enemySpeed;
+            Enemy enemy = enemyGameObject.GetComponent<Enemy>(); 
+            enemy.SetTarget(wayPoints[location]);
+            enemy.Health = waves[waveIndex].enemyHealth;
+            enemy.Speed = waves[waveIndex].enemySpeed;
                 
-                aliveEnemyCount++;
-                spawnedEnemyCount++;
-                return;
-            }
+            aliveEnemyCount++;
+            spawnedEnemyCount++;
+            return;
         }
     }
 
-    public void DestroyEnemy(GameObject enemy)
+    public void DestroyEnemy(Enemy enemy)
     {
-        OnEnemyDestroyed?.Invoke(enemy.GetComponent<Enemy>());
-        enemy.SetActive(false);
+        OnEnemyDestroyed?.Invoke(enemy);
+        enemy.gameObject.SetActive(false);
         aliveEnemyCount--;
     }
 
